@@ -1,0 +1,2689 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>6.0</version>
+    <date>2023-05-15T17:22:27Z</date>
+    <groups>
+        <group>
+            <uuid>748ad4d098d447d492bb935c907f652f</uuid>
+            <name>Templates/Databases</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <uuid>399bd1ee587245ecac6f39beaa99886f</uuid>
+            <template>Template DB PostgreSQL</template>
+            <name>Template DB PostgreSQL</name>
+            <groups>
+                <group>
+                    <name>Templates/Databases</name>
+                </group>
+            </groups>
+            <items>
+                <item>
+                    <uuid>9e42cda376654ef58ed8e5bd6c6ce44c</uuid>
+                    <name>[PostgreSQL] General: Number of running processes $1</name>
+                    <key>proc.num[{$PG_PROCESS_NAME}]</key>
+                    <delay>5m</delay>
+                    <history>1w</history>
+                    <trends>90d</trends>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>ae195b0e24324a1bb93504a8bb78aec1</uuid>
+                            <expression>last(/Template DB PostgreSQL/proc.num[{$PG_PROCESS_NAME}])=1</expression>
+                            <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
+                            <recovery_expression>last(/Template DB PostgreSQL/proc.num[{$PG_PROCESS_NAME}])=0</recovery_expression>
+                            <name>PostgreSQL: Service not running</name>
+                            <priority>HIGH</priority>
+                            <manual_close>YES</manual_close>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>b2f1da072f99481088d0bf3014eac2aa</uuid>
+                    <name>[PostgreSQL] General: Ping (Timing)</name>
+                    <key>zapgix.timing[ping]</key>
+                    <delay>10m</delay>
+                    <history>1w</history>
+                    <trends>30d</trends>
+                    <value_type>FLOAT</value_type>
+                    <units>ms</units>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>1f5b3edf5d20425db6e9b40b17d821bf</uuid>
+                            <expression>last(/Template DB PostgreSQL/zapgix.timing[ping])&gt;{$PG_PING_THRESHOLD_MS}</expression>
+                            <name>PostgreSQL: Ping response to long ({ITEM.LASTVALUE})</name>
+                            <priority>AVERAGE</priority>
+                            <manual_close>YES</manual_close>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>a59962c84a914f159ebd99918f277aae</uuid>
+                    <name>PostgreSQL: bgwriter - Buffers allocated</name>
+                    <key>zapgix[bgwriter, buffers_alloc]</key>
+                    <delay>600</delay>
+                    <history>7d</history>
+                    <units>B</units>
+                    <preprocessing>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <parameters>
+                                <parameter/>
+                            </parameters>
+                        </step>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <parameters>
+                                <parameter>8192</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>20b009bc68dc45029ed3b838468d81f2</uuid>
+                    <name>PostgreSQL: bgwriter - Buffers written directly by a backend</name>
+                    <key>zapgix[bgwriter, buffers_backend]</key>
+                    <delay>600</delay>
+                    <history>7d</history>
+                    <units>B</units>
+                    <preprocessing>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <parameters>
+                                <parameter/>
+                            </parameters>
+                        </step>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <parameters>
+                                <parameter>8192</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>58b7f7c80fad4859ad1704a1f19ca3e7</uuid>
+                    <name>PostgreSQL: bgwriter - Times a backend had to execute its own fsync</name>
+                    <key>zapgix[bgwriter, buffers_backend_fsync]</key>
+                    <delay>600</delay>
+                    <history>7d</history>
+                    <preprocessing>
+                        <step>
+                            <type>SIMPLE_CHANGE</type>
+                            <parameters>
+                                <parameter/>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>5e2b9704fa3f4b72a767a9190e766433</uuid>
+                    <name>PostgreSQL: bgwriter - Buffers written during checkpoints</name>
+                    <key>zapgix[bgwriter, buffers_checkpoint]</key>
+                    <delay>600</delay>
+                    <history>7d</history>
+                    <units>B</units>
+                    <preprocessing>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <parameters>
+                                <parameter/>
+                            </parameters>
+                        </step>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <parameters>
+                                <parameter>8192</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>dfac5d5151ee4c37bb31a13b570203c4</uuid>
+                    <name>PostgreSQL: bgwriter - Buffers written by the bgwriter</name>
+                    <key>zapgix[bgwriter, buffers_clean]</key>
+                    <delay>600</delay>
+                    <history>7d</history>
+                    <units>B</units>
+                    <preprocessing>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <parameters>
+                                <parameter/>
+                            </parameters>
+                        </step>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <parameters>
+                                <parameter>8192</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>961f66cd6b074a97a9d0e8bf42aabb2d</uuid>
+                    <name>PostgreSQL: bgwriter - Required checkpoints</name>
+                    <key>zapgix[bgwriter, checkpoints_req]</key>
+                    <delay>600</delay>
+                    <history>7d</history>
+                    <preprocessing>
+                        <step>
+                            <type>SIMPLE_CHANGE</type>
+                            <parameters>
+                                <parameter/>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>e7bd25b44f914cba9a6ab8b63dd1db5e</uuid>
+                            <expression>last(/Template DB PostgreSQL/zapgix[bgwriter, checkpoints_req])&gt;{$PG_CHECKPOINTS_REQ_THRESHOLD}</expression>
+                            <name>PostgreSQL: Required checkpoints occurs to frequently</name>
+                            <priority>AVERAGE</priority>
+                            <manual_close>YES</manual_close>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>64f58d5d59d743f8ba662505ec098d6b</uuid>
+                    <name>PostgreSQL: bgwriter - Checkpoints by timeout</name>
+                    <key>zapgix[bgwriter, checkpoints_timed]</key>
+                    <delay>600</delay>
+                    <history>7d</history>
+                    <preprocessing>
+                        <step>
+                            <type>SIMPLE_CHANGE</type>
+                            <parameters>
+                                <parameter/>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>edfa2745071f49ab9061dbabab553ad2</uuid>
+                    <name>PostgreSQL: bgwriter - Sync time</name>
+                    <key>zapgix[bgwriter, checkpoint_sync_time]</key>
+                    <delay>600</delay>
+                    <history>7d</history>
+                    <units>ms</units>
+                    <preprocessing>
+                        <step>
+                            <type>SIMPLE_CHANGE</type>
+                            <parameters>
+                                <parameter/>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>e544e346019048fca571120ab19d28cc</uuid>
+                    <name>PostgreSQL: bgwriter - Write time</name>
+                    <key>zapgix[bgwriter, checkpoint_write_time]</key>
+                    <delay>600</delay>
+                    <history>7d</history>
+                    <units>ms</units>
+                    <preprocessing>
+                        <step>
+                            <type>SIMPLE_CHANGE</type>
+                            <parameters>
+                                <parameter/>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>56ad7bb3b4294529a978e96b377c8d2c</uuid>
+                    <name>PostgreSQL: bgwriter - Max written</name>
+                    <key>zapgix[bgwriter, maxwritten_clean]</key>
+                    <delay>600</delay>
+                    <history>7d</history>
+                    <units>ms</units>
+                    <preprocessing>
+                        <step>
+                            <type>SIMPLE_CHANGE</type>
+                            <parameters>
+                                <parameter/>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>bc64202bf3824df4a0e802c80910783e</uuid>
+                    <name>[PostgreSQL] Buffers: Clear</name>
+                    <key>zapgix[buffercache-clear]</key>
+                    <delay>10m</delay>
+                    <history>7d</history>
+                    <trends>90d</trends>
+                    <units>B</units>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <parameters>
+                                <parameter>8192</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>1bbafb6e20bb4fcaa89027055d6c616a</uuid>
+                    <name>[PostgreSQL] Buffers: Dirty</name>
+                    <key>zapgix[buffercache-dirty]</key>
+                    <delay>10m</delay>
+                    <history>1w</history>
+                    <trends>90d</trends>
+                    <units>B</units>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <parameters>
+                                <parameter>8192</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>6b89da9b329047059513091cdd9157a7</uuid>
+                    <name>[PostgreSQL] Buffers: Total</name>
+                    <key>zapgix[buffercache-total]</key>
+                    <delay>10m</delay>
+                    <history>1w</history>
+                    <trends>90d</trends>
+                    <units>B</units>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <parameters>
+                                <parameter>8192</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>c2a4bf0089fe4239aac02ba87a8bfdc1</uuid>
+                    <name>[PostgreSQL] Buffers: Used</name>
+                    <key>zapgix[buffercache-used]</key>
+                    <delay>10m</delay>
+                    <history>1w</history>
+                    <trends>90d</trends>
+                    <units>B</units>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <parameters>
+                                <parameter>8192</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>06039fe572934691b2de9d79797ad867</uuid>
+                    <name>[PostgreSQL] General: Cache - Hit ratio</name>
+                    <key>zapgix[cache-hits]</key>
+                    <delay>1h</delay>
+                    <history>1w</history>
+                    <trends>90d</trends>
+                    <value_type>FLOAT</value_type>
+                    <units>%</units>
+                    <description>Check cache hit ratio in %.</description>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>1086f27380174bac940e6401882f4c31</uuid>
+                            <expression>max(/Template DB PostgreSQL/zapgix[cache-hits],#5)&lt;{$PG_CACHE_HIT_RATIO}</expression>
+                            <name>PostgreSQL: Cache hit ratio too low ({ITEM.LASTVALUE})</name>
+                            <priority>WARNING</priority>
+                            <manual_close>YES</manual_close>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>31de827da9d04ecc94374e82b7c8503e</uuid>
+                    <name>PostgreSQL: connections - Number of active</name>
+                    <key>zapgix[connections-active]</key>
+                    <delay>30s</delay>
+                    <history>7d</history>
+                    <description>Total count of active clients who connected to the PostgreSQL service and performing work.</description>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>90bfd5eab1474ba4a1ab907b168c21c5</uuid>
+                    <name>PostgreSQL: connections - Number of idle</name>
+                    <key>zapgix[connections-idle]</key>
+                    <delay>30s</delay>
+                    <history>7d</history>
+                    <description>Total count of idle clients connected to the PostgreSQL service.</description>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>ac16b575ab6b452c9c90fb9f9017e311</uuid>
+                    <name>PostgreSQL: connections - Number of idle in transaction</name>
+                    <key>zapgix[connections-idle_in_transaction]</key>
+                    <delay>30s</delay>
+                    <history>7d</history>
+                    <description>Total count of idle clients who connected to the PostgreSQL service and have unfinished transaction. This client must be disconnected.</description>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>05729b6a61294efe82c43f28c9ae5e19</uuid>
+                            <expression>min(/Template DB PostgreSQL/zapgix[connections-idle_in_transaction],#5)&gt;{$PG_CONN_IDLE_IN_TRANSACTION}</expression>
+                            <name>PostgreSQL: Idle in transaction connections to high ({ITEM.LASTVALUE})</name>
+                            <priority>AVERAGE</priority>
+                            <manual_close>YES</manual_close>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>204e0370e4a3406284f9b0726e3822d6</uuid>
+                    <name>PostgreSQL: connections - Number of prepared</name>
+                    <key>zapgix[connections-prepared]</key>
+                    <delay>30s</delay>
+                    <history>7d</history>
+                    <description>Total count of clients connected to the PostgreSQL service and blocked by others clients.</description>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>1304f07eb5bd4c699241535be65d40e6</uuid>
+                    <name>PostgreSQL: connections - Total</name>
+                    <key>zapgix[connections-total]</key>
+                    <delay>60</delay>
+                    <history>7d</history>
+                    <description>Total count of clients connected to the PostgreSQL service.</description>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>ca9437bb4d6e45bd9564299c5d889daa</uuid>
+                    <name>PostgreSQL: connections - Total (%)</name>
+                    <key>zapgix[connections-total_pct]</key>
+                    <delay>60</delay>
+                    <history>7d</history>
+                    <units>%</units>
+                    <description>Connections percentage of the maximum number of allowed connections (max_connections).</description>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>629e963d21d5481aa061a2570ab98e43</uuid>
+                            <expression>last(/Template DB PostgreSQL/zapgix[connections-total_pct])&gt;{$PG_CONN_TOTAL_PCT}</expression>
+                            <name>PostgreSQL: Total number of connections to high ({ITEM.LASTVALUE})</name>
+                            <priority>HIGH</priority>
+                            <manual_close>YES</manual_close>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>b5722c277f5346f8abbbc815aacaf4c6</uuid>
+                    <name>PostgreSQL: connections - Number of waiting</name>
+                    <key>zapgix[connections-waiting]</key>
+                    <delay>30s</delay>
+                    <history>7d</history>
+                    <description>Total count of clients connected to the PostgreSQL service and blocked by others clients.</description>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>ec84b272618347099baa302c8300c64a</uuid>
+                            <expression>last(/Template DB PostgreSQL/zapgix[connections-waiting])&gt;{$PG_CONN_WAITING}</expression>
+                            <name>PostgreSQL: Number of waiting connections to high ({ITEM.LASTVALUE})</name>
+                            <priority>AVERAGE</priority>
+                            <manual_close>YES</manual_close>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>2f76849f615743df970cfc287540952f</uuid>
+                    <name>PostgreSQL: Users logged from Database</name>
+                    <key>zapgix[db_count_user]</key>
+                    <delay>30s</delay>
+                    <trends>0</trends>
+                    <value_type>CHAR</value_type>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>0d167d7920c248cb8611d1c7d79cc323</uuid>
+                    <name>PostgreSQL: Users logged total</name>
+                    <key>zapgix[db_stat_activity]</key>
+                    <delay>30s</delay>
+                    <units>usuários</units>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>7f81a70d57464cee8abd902a33e87d2e</uuid>
+                    <name>PostgreSQL: settings - $2</name>
+                    <key>zapgix[settings, fsync]</key>
+                    <delay>21600</delay>
+                    <history>7d</history>
+                    <trends>0</trends>
+                    <value_type>CHAR</value_type>
+                    <description>http://www.postgresql.org/docs/9.2/static/runtime-config-wal.html#GUC-FSYNC</description>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>22dbbee2ea834555b0eae5d94c9eacbe</uuid>
+                    <name>PostgreSQL: settings - $2</name>
+                    <key>zapgix[settings, full_page_writes]</key>
+                    <delay>21600</delay>
+                    <history>7d</history>
+                    <trends>0</trends>
+                    <value_type>CHAR</value_type>
+                    <description>http://www.postgresql.org/docs/9.2/static/runtime-config-wal.html#GUC-FULL-PAGE-WRITES</description>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>d141f00ad59f40f99d20cab51ad47094</uuid>
+                    <name>PostgreSQL: settings - $2</name>
+                    <key>zapgix[settings, synchronous_commit]</key>
+                    <delay>21600</delay>
+                    <history>7d</history>
+                    <trends>0</trends>
+                    <value_type>CHAR</value_type>
+                    <description>http://www.postgresql.org/docs/9.2/static/runtime-config-wal.html#GUC-SYNCHRONOUS-COMMIT</description>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>1b34863c2ae045f0a755355fcea0c822</uuid>
+                    <name>PostgreSQL: dbstat - Blocks hit per second</name>
+                    <key>zapgix[stats_dbs, blks_hit]</key>
+                    <delay>120</delay>
+                    <history>7d</history>
+                    <description>Number of times disk blocks were found already in the buffer cache, so that a read was not necessary (this only includes hits in the PostgreSQL buffer cache, not the operating system's file system cache)</description>
+                    <preprocessing>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <parameters>
+                                <parameter/>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>419b38598d274085b2fb4c3c6b6909e4</uuid>
+                    <name>PostgreSQL: dbstat - Blocks read per second</name>
+                    <key>zapgix[stats_dbs, blks_read]</key>
+                    <delay>120</delay>
+                    <history>7d</history>
+                    <description>Number of disk blocks read</description>
+                    <preprocessing>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <parameters>
+                                <parameter/>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>4097d037c95f485d843f34f53ca11ba3</uuid>
+                    <name>PostgreSQL: dbstat - Registered conflicts</name>
+                    <key>zapgix[stats_dbs, conflicts]</key>
+                    <delay>120</delay>
+                    <history>7d</history>
+                    <description>Number of queries canceled due to conflicts with recovery in this database. (Conflicts occur only on standby servers; see pg_stat_database_conflicts for details.).</description>
+                    <preprocessing>
+                        <step>
+                            <type>SIMPLE_CHANGE</type>
+                            <parameters>
+                                <parameter/>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>9feddad6ea6947ce9317cfaf0c65c64d</uuid>
+                            <expression>last(/Template DB PostgreSQL/zapgix[stats_dbs, conflicts])&gt;{$PG_CONFLICTS_THRESHOLD}</expression>
+                            <name>PostgreSQL: Recovery conflict occured</name>
+                            <priority>AVERAGE</priority>
+                            <manual_close>YES</manual_close>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>cb62e836d5814b9c8a695a618ba34ea8</uuid>
+                    <name>PostgreSQL: dbstat - Registered deadlocks</name>
+                    <key>zapgix[stats_dbs, deadlocks]</key>
+                    <delay>120</delay>
+                    <history>7d</history>
+                    <description>Number of deadlocks detected.</description>
+                    <preprocessing>
+                        <step>
+                            <type>SIMPLE_CHANGE</type>
+                            <parameters>
+                                <parameter/>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>8871b74978d149e18ce342ca9781861e</uuid>
+                            <expression>last(/Template DB PostgreSQL/zapgix[stats_dbs, deadlocks])&gt;{$PG_DEADLOCKS_THRESHOLD}</expression>
+                            <name>PostgreSQL: Deadlock occured</name>
+                            <priority>AVERAGE</priority>
+                            <manual_close>YES</manual_close>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>766ac16fa71c4435bc5388daec01db2c</uuid>
+                    <name>PostgreSQL: dbstat - Temp_bytes written</name>
+                    <key>zapgix[stats_dbs, temp_bytes]</key>
+                    <delay>120</delay>
+                    <history>7d</history>
+                    <units>B</units>
+                    <description>Total amount of data written to temporary files by queries. All temporary files are counted, regardless of why the temporary file was created, and regardless of the log_temp_files setting.</description>
+                    <preprocessing>
+                        <step>
+                            <type>SIMPLE_CHANGE</type>
+                            <parameters>
+                                <parameter/>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>648bb9d4527e46a8a5efed8fa0208298</uuid>
+                    <name>PostgreSQL: dbstat - Temp_files created</name>
+                    <key>zapgix[stats_dbs, temp_files]</key>
+                    <delay>120</delay>
+                    <history>7d</history>
+                    <description>Number of temporary files created by queries. All temporary files are counted, regardless of why the temporary file was created (e.g., sorting or hashing), and regardless of the log_temp_files setting.</description>
+                    <preprocessing>
+                        <step>
+                            <type>SIMPLE_CHANGE</type>
+                            <parameters>
+                                <parameter/>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>7be8866857554c538f89e709e2ec310e</uuid>
+                    <name>PostgreSQL: dbstat - Tuples deleted per second</name>
+                    <key>zapgix[stats_dbs, tup_deleted]</key>
+                    <delay>120</delay>
+                    <history>7d</history>
+                    <description>Number of rows deleted by queries.</description>
+                    <preprocessing>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <parameters>
+                                <parameter/>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>3047e1cea61e47558ae297778db44429</uuid>
+                    <name>PostgreSQL: dbstat - Tuples fetched per second</name>
+                    <key>zapgix[stats_dbs, tup_fetched]</key>
+                    <delay>120</delay>
+                    <history>7d</history>
+                    <description>Number of rows fetched by queries.</description>
+                    <preprocessing>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <parameters>
+                                <parameter/>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>0ffe8a3b8dfc49308b6e2e9367c75da4</uuid>
+                    <name>PostgreSQL: dbstat - Tuples inserted per second</name>
+                    <key>zapgix[stats_dbs, tup_inserted]</key>
+                    <delay>120</delay>
+                    <history>7d</history>
+                    <description>Number of rows inserted by queries.</description>
+                    <preprocessing>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <parameters>
+                                <parameter/>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>d8984220d6cf44deafcf9232d29c92e0</uuid>
+                    <name>PostgreSQL: dbstat - Tuples returned per second</name>
+                    <key>zapgix[stats_dbs, tup_returned]</key>
+                    <delay>120</delay>
+                    <history>7d</history>
+                    <description>Number of rows returned by queries.</description>
+                    <preprocessing>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <parameters>
+                                <parameter/>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>07f652cc0eaa4a0489b6f4d7c1bb974f</uuid>
+                    <name>PostgreSQL: dbstat - Tuples updated per second</name>
+                    <key>zapgix[stats_dbs, tup_updated]</key>
+                    <delay>120</delay>
+                    <history>7d</history>
+                    <description>Number of rows updated by queries.</description>
+                    <preprocessing>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <parameters>
+                                <parameter/>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>213d8e05fd95469db6fb352117c5cd35</uuid>
+                    <name>PostgreSQL: dbstat - Commits per second</name>
+                    <key>zapgix[stats_dbs, xact_commit]</key>
+                    <delay>120</delay>
+                    <history>7d</history>
+                    <description>Number of transactions that have been committed.</description>
+                    <preprocessing>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <parameters>
+                                <parameter/>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>68acbd02e76a4195b7870f680df66ee8</uuid>
+                    <name>PostgreSQL: dbstat - Rollbacks per second</name>
+                    <key>zapgix[stats_dbs, xact_rollback]</key>
+                    <delay>120</delay>
+                    <history>7d</history>
+                    <description>Number of transactions that have been rolled back.</description>
+                    <preprocessing>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <parameters>
+                                <parameter/>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>54ed504bc1bc47488ea44efa948e283e</uuid>
+                    <name>[PostgreSQL] General: Query time (avg)</name>
+                    <key>zapgix[stats_statements-avg_query_time]</key>
+                    <delay>5m</delay>
+                    <history>1w</history>
+                    <trends>90d</trends>
+                    <value_type>FLOAT</value_type>
+                    <units>ms</units>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>7fceca02476c4f27b59fb817e6cd0a25</uuid>
+                    <name>[PostgreSQL] Streaming: Replication - Stand-by count</name>
+                    <key>zapgix[streaming-count]</key>
+                    <delay>5m</delay>
+                    <history>1w</history>
+                    <trends>90d</trends>
+                    <description>Streaming replication stand-bys count.</description>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>61bfcdb3e1cb400ea3117da42a778a10</uuid>
+                    <name>[PostgreSQL] Streaming: Replication - Recovery state</name>
+                    <key>zapgix[streaming-state]</key>
+                    <delay>1h</delay>
+                    <history>1w</history>
+                    <trends>0</trends>
+                    <value_type>CHAR</value_type>
+                    <description>Streaming replication state: t (true) if service is in recovery mode, and f (false) if server in master mode.</description>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>cde0b61f36e34e19993182e032b6b0f2</uuid>
+                    <name>[PostgreSQL] Transactions: Current max active transaction time</name>
+                    <key>zapgix[transactions-active]</key>
+                    <history>1w</history>
+                    <trends>90d</trends>
+                    <value_type>FLOAT</value_type>
+                    <units>s</units>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>8e947dbccb174e8fbd68f7876e4dbe9d</uuid>
+                            <expression>last(/Template DB PostgreSQL/zapgix[transactions-active])&gt;{$PG_LONG_QUERY_THRESHOLD}</expression>
+                            <name>PostgreSQL: Active transaction to long (time={ITEM.LASTVALUE})</name>
+                            <priority>AVERAGE</priority>
+                            <manual_close>YES</manual_close>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>600aa79152d946d7b387a191a66f5c3c</uuid>
+                    <name>PostgreSQL: transactions - Current max idle transaction time</name>
+                    <key>zapgix[transactions-idle]</key>
+                    <delay>60</delay>
+                    <history>7d</history>
+                    <value_type>FLOAT</value_type>
+                    <units>s</units>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>7bcba0d7bea34a9abc79d78920794e16</uuid>
+                            <expression>min(/Template DB PostgreSQL/zapgix[transactions-idle],#3)&gt;{$PG_LONG_QUERY_THRESHOLD}</expression>
+                            <name>PostgreSQL: Idle transaction to long ({ITEM.LASTVALUE})</name>
+                            <priority>AVERAGE</priority>
+                            <manual_close>YES</manual_close>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>9dec714858b346849f8a04349d9ced08</uuid>
+                    <name>PostgreSQL: transactions - Current max prepared transaction time</name>
+                    <key>zapgix[transactions-prepared]</key>
+                    <delay>60</delay>
+                    <history>7d</history>
+                    <value_type>FLOAT</value_type>
+                    <units>s</units>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>5fe9cbd31ed940c5abfd8edbc9409097</uuid>
+                    <name>PostgreSQL: transactions - Current max waiting transaction time</name>
+                    <key>zapgix[transactions-waiting]</key>
+                    <delay>60</delay>
+                    <history>7d</history>
+                    <value_type>FLOAT</value_type>
+                    <units>s</units>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>9fd2c7b8392a467aa40147bc3f13006b</uuid>
+                            <expression>last(/Template DB PostgreSQL/zapgix[transactions-waiting])&gt;{$PG_LONG_QUERY_THRESHOLD}</expression>
+                            <name>PostgreSQL: Waiting transaction to long ({ITEM.LASTVALUE})</name>
+                            <priority>AVERAGE</priority>
+                            <manual_close>YES</manual_close>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>5efc3f29fc2f4568a2021f3d536a7c78</uuid>
+                    <name>PostgreSQL: Commited Transactions</name>
+                    <key>zapgix[txcommit]</key>
+                    <delay>30s</delay>
+                    <history>7d</history>
+                    <units>tps</units>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>1a962ebc517e4c7a98c39a40400f0d95</uuid>
+                    <name>PostgreSQL: Rolled Back Transactions</name>
+                    <key>zapgix[txrollback]</key>
+                    <delay>30s</delay>
+                    <history>7d</history>
+                    <units>tps</units>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>7f70d6babfaf4779b5723770e901eba5</uuid>
+                    <name>[PostgreSQL] General: Uptime</name>
+                    <key>zapgix[uptime]</key>
+                    <history>1w</history>
+                    <trends>90d</trends>
+                    <units>uptime</units>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>3dcbc641ca8c414aaeb8dd8aa14da388</uuid>
+                            <expression>last(/Template DB PostgreSQL/zapgix[uptime])&lt;{$PG_UPTIME_THRESHOLD}</expression>
+                            <name>PostgreSQL: Service was restarted (uptime={ITEM.LASTVALUE})</name>
+                            <priority>AVERAGE</priority>
+                            <manual_close>YES</manual_close>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>483e5ac15e944582a459cee5fd9b947c</uuid>
+                    <name>[PostgreSQL] Version</name>
+                    <key>zapgix[ version]</key>
+                    <delay>1h</delay>
+                    <history>1w</history>
+                    <trends>0</trends>
+                    <value_type>CHAR</value_type>
+                    <description>WAL write in bytes,.</description>
+                    <preprocessing>
+                        <step>
+                            <type>DISCARD_UNCHANGED_HEARTBEAT</type>
+                            <parameters>
+                                <parameter>1d</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>57c358b1a4ce4180b088ac9f3f772773</uuid>
+                    <name>[PostgreSQL] WAL: Segments count</name>
+                    <key>zapgix[wal-count]</key>
+                    <delay>5m</delay>
+                    <history>1w</history>
+                    <trends>90d</trends>
+                    <description>Number of WAL segments stored in pg_xlog directory.</description>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>be298258ee1e4e8dbf9323b8c75fcc92</uuid>
+                    <name>[PostgreSQL] WAL: Write</name>
+                    <key>zapgix[wal-write]</key>
+                    <delay>5m</delay>
+                    <history>1w</history>
+                    <trends>90d</trends>
+                    <units>B</units>
+                    <description>WAL write in bytes,.</description>
+                    <preprocessing>
+                        <step>
+                            <type>SIMPLE_CHANGE</type>
+                            <parameters>
+                                <parameter/>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>PostgreSQL</value>
+                        </tag>
+                    </tags>
+                </item>
+            </items>
+            <discovery_rules>
+                <discovery_rule>
+                    <uuid>0277cebb1a4e4f59a876e978af67e330</uuid>
+                    <name>[PostgreSQL] Discovery: Database tables</name>
+                    <key>pgsql.table.discovery[{$PG_CONNINFO}]</key>
+                    <delay>12h</delay>
+                    <filter>
+                        <conditions>
+                            <condition>
+                                <macro>{#TABLENAME}</macro>
+                                <value>^public.(products|customers|sessions)$</value>
+                                <formulaid>A</formulaid>
+                            </condition>
+                        </conditions>
+                    </filter>
+                    <lifetime>1d</lifetime>
+                    <description>PostgreSQL tables discovery. Use regular expressions to configure search.
+Disabled by default because may add too many items.</description>
+                    <item_prototypes>
+                        <item_prototype>
+                            <uuid>eb61c9de378349e8bb6219bb2b8b5ad7</uuid>
+                            <name>PostgreSQL: table {#TABLENAME} indexes size</name>
+                            <key>pgsql.index.size[{$PG_CONNINFO},{#TABLENAME}]</key>
+                            <delay>900</delay>
+                            <history>7d</history>
+                            <value_type>FLOAT</value_type>
+                            <units>b</units>
+                            <description>PostgreSQL all indexes size which belongs to a single table.</description>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>PostgreSQL</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>3919ed87619144d18b3d117b6dd36aa6</uuid>
+                            <name>PostgreSQL: table {#TABLENAME} size</name>
+                            <key>pgsql.table.size[{$PG_CONNINFO},{#TABLENAME}]</key>
+                            <delay>900</delay>
+                            <history>7d</history>
+                            <value_type>FLOAT</value_type>
+                            <units>b</units>
+                            <description>PostgreSQL single table size.</description>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>PostgreSQL</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>cd614492ea504aef8498f4f07c732bd8</uuid>
+                            <name>PostgreSQL table {#TABLENAME} stat: analyzes</name>
+                            <key>pgsql.table.stat.analyze_count[{$PG_CONNINFO},{#TABLENAME}]</key>
+                            <delay>600</delay>
+                            <history>7d</history>
+                            <description>Number of analyze operations performed on this table.</description>
+                            <preprocessing>
+                                <step>
+                                    <type>SIMPLE_CHANGE</type>
+                                    <parameters>
+                                        <parameter/>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>PostgreSQL</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>e590e36fc6a34ae98e493d819d7dc9d5</uuid>
+                            <name>PostgreSQL table {#TABLENAME} stat: autoanalyzes</name>
+                            <key>pgsql.table.stat.autoanalyze_count[{$PG_CONNINFO},{#TABLENAME}]</key>
+                            <delay>600</delay>
+                            <history>7d</history>
+                            <description>Number of autoanalyze operations performed on this table.</description>
+                            <preprocessing>
+                                <step>
+                                    <type>SIMPLE_CHANGE</type>
+                                    <parameters>
+                                        <parameter/>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>PostgreSQL</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>4465a4e63b4f4781ac836c21e18873a9</uuid>
+                            <name>PostgreSQL table {#TABLENAME} stat: autovacuums</name>
+                            <key>pgsql.table.stat.autovacuum_count[{$PG_CONNINFO},{#TABLENAME}]</key>
+                            <delay>600</delay>
+                            <history>7d</history>
+                            <description>Number of autovacuum operations performed on this table.</description>
+                            <preprocessing>
+                                <step>
+                                    <type>SIMPLE_CHANGE</type>
+                                    <parameters>
+                                        <parameter/>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>PostgreSQL</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>4bec7fc6d9e240baba462c78c63f015d</uuid>
+                            <name>PostgreSQL table {#TABLENAME} stat: cache blocks hits per second</name>
+                            <key>pgsql.table.stat.heap_blks_hit[{$PG_CONNINFO},{#TABLENAME}]</key>
+                            <delay>120</delay>
+                            <history>7d</history>
+                            <description>Number of buffer hits in this table</description>
+                            <preprocessing>
+                                <step>
+                                    <type>CHANGE_PER_SECOND</type>
+                                    <parameters>
+                                        <parameter/>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>PostgreSQL</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>c8db1156bb744cfdad0ceeb5c15fe2d7</uuid>
+                            <name>PostgreSQL table {#TABLENAME} stat: cache blocks read per second</name>
+                            <key>pgsql.table.stat.heap_blks_read[{$PG_CONNINFO},{#TABLENAME}]</key>
+                            <delay>120</delay>
+                            <history>7d</history>
+                            <description>Number of disk blocks read from this table.</description>
+                            <preprocessing>
+                                <step>
+                                    <type>CHANGE_PER_SECOND</type>
+                                    <parameters>
+                                        <parameter/>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>PostgreSQL</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>fffa1ef2251b4670ae7189546f0e818a</uuid>
+                            <name>PostgreSQL table {#TABLENAME} stat: index blocks hit per second</name>
+                            <key>pgsql.table.stat.idx_blks_hit[{$PG_CONNINFO},{#TABLENAME}]</key>
+                            <delay>120</delay>
+                            <history>7d</history>
+                            <description>Number of buffer hits in all indexes on this table.</description>
+                            <preprocessing>
+                                <step>
+                                    <type>CHANGE_PER_SECOND</type>
+                                    <parameters>
+                                        <parameter/>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>PostgreSQL</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>3de5edd25cef4679b38881a7caf2f169</uuid>
+                            <name>PostgreSQL table {#TABLENAME} stat: index blocks read per second</name>
+                            <key>pgsql.table.stat.idx_blks_read[{$PG_CONNINFO},{#TABLENAME}]</key>
+                            <delay>120</delay>
+                            <history>7d</history>
+                            <description>Number of disk blocks read from all indexes on this table.</description>
+                            <preprocessing>
+                                <step>
+                                    <type>CHANGE_PER_SECOND</type>
+                                    <parameters>
+                                        <parameter/>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>PostgreSQL</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>c48b9a9fbeed468788980deb7b670e05</uuid>
+                            <name>PostgreSQL table {#TABLENAME} stat: index scans</name>
+                            <key>pgsql.table.stat.idx_scan[{$PG_CONNINFO},{#TABLENAME}]</key>
+                            <delay>120</delay>
+                            <history>7d</history>
+                            <description>Number of index scans initiated on this table.</description>
+                            <preprocessing>
+                                <step>
+                                    <type>SIMPLE_CHANGE</type>
+                                    <parameters>
+                                        <parameter/>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>PostgreSQL</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>448340b6c37c4d06bd99431ead34ef37</uuid>
+                            <name>PostgreSQL table {#TABLENAME} stat: tuples read per second by index scans</name>
+                            <key>pgsql.table.stat.idx_tup_fetch[{$PG_CONNINFO},{#TABLENAME}]</key>
+                            <delay>120</delay>
+                            <history>7d</history>
+                            <description>Number of live rows fetched by index scans.</description>
+                            <preprocessing>
+                                <step>
+                                    <type>CHANGE_PER_SECOND</type>
+                                    <parameters>
+                                        <parameter/>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>PostgreSQL</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>8c7a7e1c74c340dc8a9edb7f17c156bc</uuid>
+                            <name>PostgreSQL table {#TABLENAME} stat: dead rows</name>
+                            <key>pgsql.table.stat.n_dead_tup[{$PG_CONNINFO},{#TABLENAME}]</key>
+                            <delay>120</delay>
+                            <history>7d</history>
+                            <description>Estimated number of dead rows.</description>
+                            <preprocessing>
+                                <step>
+                                    <type>SIMPLE_CHANGE</type>
+                                    <parameters>
+                                        <parameter/>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>PostgreSQL</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>cda5729845bb41dabd4a2fc9fb8b7a3d</uuid>
+                            <name>PostgreSQL table {#TABLENAME} stat: live rows</name>
+                            <key>pgsql.table.stat.n_live_tup[{$PG_CONNINFO},{#TABLENAME}]</key>
+                            <delay>120</delay>
+                            <history>7d</history>
+                            <description>Estimated number of live rows.</description>
+                            <preprocessing>
+                                <step>
+                                    <type>SIMPLE_CHANGE</type>
+                                    <parameters>
+                                        <parameter/>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>PostgreSQL</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>40d7dc58f2014603ad2adf481ff0c686</uuid>
+                            <name>PostgreSQL table {#TABLENAME} stat: rows deleted per second</name>
+                            <key>pgsql.table.stat.n_tup_del[{$PG_CONNINFO},{#TABLENAME}]</key>
+                            <delay>120</delay>
+                            <history>7d</history>
+                            <description>Number of rows deleted.</description>
+                            <preprocessing>
+                                <step>
+                                    <type>CHANGE_PER_SECOND</type>
+                                    <parameters>
+                                        <parameter/>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>PostgreSQL</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>db48c5d4bf19440582538064302da3e0</uuid>
+                            <name>PostgreSQL table {#TABLENAME} stat: rows HOT updated per second</name>
+                            <key>pgsql.table.stat.n_tup_hot_upd[{$PG_CONNINFO},{#TABLENAME}]</key>
+                            <delay>120</delay>
+                            <history>7d</history>
+                            <description>Number of rows HOT updated (i.e., with no separate index update required).</description>
+                            <preprocessing>
+                                <step>
+                                    <type>CHANGE_PER_SECOND</type>
+                                    <parameters>
+                                        <parameter/>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>PostgreSQL</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>9a3c5dc9da9e467da47ef45d96806e83</uuid>
+                            <name>PostgreSQL table {#TABLENAME} stat: rows inserted per second</name>
+                            <key>pgsql.table.stat.n_tup_ins[{$PG_CONNINFO},{#TABLENAME}]</key>
+                            <delay>120</delay>
+                            <history>7d</history>
+                            <description>Number of rows inserted.</description>
+                            <preprocessing>
+                                <step>
+                                    <type>CHANGE_PER_SECOND</type>
+                                    <parameters>
+                                        <parameter/>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>PostgreSQL</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>0bd6688a83e0462c926da22640905b46</uuid>
+                            <name>PostgreSQL table {#TABLENAME} stat: rows updated per second</name>
+                            <key>pgsql.table.stat.n_tup_upd[{$PG_CONNINFO},{#TABLENAME}]</key>
+                            <delay>120</delay>
+                            <history>7d</history>
+                            <description>Number of rows updated.</description>
+                            <preprocessing>
+                                <step>
+                                    <type>CHANGE_PER_SECOND</type>
+                                    <parameters>
+                                        <parameter/>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>PostgreSQL</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>15dabc523b7242e989e9fdaacda80c0f</uuid>
+                            <name>PostgreSQL table {#TABLENAME} stat: sequential scans</name>
+                            <key>pgsql.table.stat.seq_scan[{$PG_CONNINFO},{#TABLENAME}]</key>
+                            <delay>120</delay>
+                            <history>7d</history>
+                            <description>Number of sequential scans initiated on this table.</description>
+                            <preprocessing>
+                                <step>
+                                    <type>SIMPLE_CHANGE</type>
+                                    <parameters>
+                                        <parameter/>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>PostgreSQL</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>9ead765de44b4dab93c77d733bcefb32</uuid>
+                            <name>PostgreSQL table {#TABLENAME} stat: tuples read per second by sequential scans</name>
+                            <key>pgsql.table.stat.seq_tup_read[{$PG_CONNINFO},{#TABLENAME}]</key>
+                            <delay>120</delay>
+                            <history>7d</history>
+                            <description>Number of live rows fetched by sequential scans.</description>
+                            <preprocessing>
+                                <step>
+                                    <type>CHANGE_PER_SECOND</type>
+                                    <parameters>
+                                        <parameter/>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>PostgreSQL</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>993e13d4457a4e7eb495731231726ca3</uuid>
+                            <name>PostgreSQL table {#TABLENAME} stat: disk blocks hits per second from TOAST indexes</name>
+                            <key>pgsql.table.stat.tidx_blks_hit[{$PG_CONNINFO},{#TABLENAME}]</key>
+                            <delay>120</delay>
+                            <history>7d</history>
+                            <description>Number of buffer hits in this table's TOAST table index (if any).</description>
+                            <preprocessing>
+                                <step>
+                                    <type>CHANGE_PER_SECOND</type>
+                                    <parameters>
+                                        <parameter/>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>PostgreSQL</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>981d8d5084634c4ba554bfebbc26f904</uuid>
+                            <name>PostgreSQL table {#TABLENAME} stat: disk blocks read per second from TOAST indexes</name>
+                            <key>pgsql.table.stat.tidx_blks_read[{$PG_CONNINFO},{#TABLENAME}]</key>
+                            <delay>120</delay>
+                            <history>7d</history>
+                            <description>Number of disk blocks read from this table's TOAST table index (if any).</description>
+                            <preprocessing>
+                                <step>
+                                    <type>CHANGE_PER_SECOND</type>
+                                    <parameters>
+                                        <parameter/>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>PostgreSQL</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>31be3814085847188b8f04f36474b97c</uuid>
+                            <name>PostgreSQL table {#TABLENAME} stat: disk blocks hits per second from TOAST</name>
+                            <key>pgsql.table.stat.toast_blks_hit[{$PG_CONNINFO},{#TABLENAME}]</key>
+                            <delay>120</delay>
+                            <history>7d</history>
+                            <description>Number of buffer hits in this table's TOAST table (if any).</description>
+                            <preprocessing>
+                                <step>
+                                    <type>CHANGE_PER_SECOND</type>
+                                    <parameters>
+                                        <parameter/>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>PostgreSQL</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>1e487175037b4ae4aa22ff2cfedfaa1f</uuid>
+                            <name>PostgreSQL table {#TABLENAME} stat: disk blocks read per second from TOAST</name>
+                            <key>pgsql.table.stat.toast_blks_read[{$PG_CONNINFO},{#TABLENAME}]</key>
+                            <delay>120</delay>
+                            <history>7d</history>
+                            <description>Number of disk blocks read from this table's TOAST table (if any).</description>
+                            <preprocessing>
+                                <step>
+                                    <type>CHANGE_PER_SECOND</type>
+                                    <parameters>
+                                        <parameter/>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>PostgreSQL</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>2382a718652544e4be446b4ac4840ec1</uuid>
+                            <name>PostgreSQL table {#TABLENAME} stat: vacuums</name>
+                            <key>pgsql.table.stat.vacuum_count[{$PG_CONNINFO},{#TABLENAME}]</key>
+                            <delay>600</delay>
+                            <history>7d</history>
+                            <description>Number of vacuum operations performed on this table.</description>
+                            <preprocessing>
+                                <step>
+                                    <type>SIMPLE_CHANGE</type>
+                                    <parameters>
+                                        <parameter/>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>PostgreSQL</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>0f0be3524a5f46c3a7da12acb1f2572a</uuid>
+                            <name>PostgreSQL: table {#TABLENAME} rows count</name>
+                            <key>pgsql.table.tuples[{$PG_CONNINFO},{#TABLENAME}]</key>
+                            <delay>900</delay>
+                            <history>7d</history>
+                            <value_type>FLOAT</value_type>
+                            <description>PostgreSQL single table rows count.</description>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>PostgreSQL</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                    </item_prototypes>
+                    <graph_prototypes>
+                        <graph_prototype>
+                            <uuid>4ba9630acff24f598a9c794f00c99908</uuid>
+                            <name>PostgreSQL table {#TABLENAME} maintenance</name>
+                            <ymin_type_1>FIXED</ymin_type_1>
+                            <graph_items>
+                                <graph_item>
+                                    <color>00CC00</color>
+                                    <yaxisside>RIGHT</yaxisside>
+                                    <item>
+                                        <host>Template DB PostgreSQL</host>
+                                        <key>pgsql.table.stat.analyze_count[{$PG_CONNINFO},{#TABLENAME}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>1</sortorder>
+                                    <color>0000CC</color>
+                                    <yaxisside>RIGHT</yaxisside>
+                                    <item>
+                                        <host>Template DB PostgreSQL</host>
+                                        <key>pgsql.table.stat.autoanalyze_count[{$PG_CONNINFO},{#TABLENAME}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>2</sortorder>
+                                    <color>CC0000</color>
+                                    <yaxisside>RIGHT</yaxisside>
+                                    <item>
+                                        <host>Template DB PostgreSQL</host>
+                                        <key>pgsql.table.stat.autovacuum_count[{$PG_CONNINFO},{#TABLENAME}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>3</sortorder>
+                                    <color>CCCC00</color>
+                                    <yaxisside>RIGHT</yaxisside>
+                                    <item>
+                                        <host>Template DB PostgreSQL</host>
+                                        <key>pgsql.table.stat.vacuum_count[{$PG_CONNINFO},{#TABLENAME}]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                        <graph_prototype>
+                            <uuid>855238fe1d574ee9a7e5a53385e7524c</uuid>
+                            <name>PostgreSQL table {#TABLENAME} read stats</name>
+                            <ymin_type_1>FIXED</ymin_type_1>
+                            <graph_items>
+                                <graph_item>
+                                    <color>00CC00</color>
+                                    <yaxisside>RIGHT</yaxisside>
+                                    <item>
+                                        <host>Template DB PostgreSQL</host>
+                                        <key>pgsql.table.stat.heap_blks_hit[{$PG_CONNINFO},{#TABLENAME}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>1</sortorder>
+                                    <color>000000</color>
+                                    <yaxisside>RIGHT</yaxisside>
+                                    <item>
+                                        <host>Template DB PostgreSQL</host>
+                                        <key>pgsql.table.stat.heap_blks_read[{$PG_CONNINFO},{#TABLENAME}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>2</sortorder>
+                                    <color>99FFFF</color>
+                                    <yaxisside>RIGHT</yaxisside>
+                                    <item>
+                                        <host>Template DB PostgreSQL</host>
+                                        <key>pgsql.table.stat.toast_blks_hit[{$PG_CONNINFO},{#TABLENAME}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>3</sortorder>
+                                    <color>FFFF99</color>
+                                    <yaxisside>RIGHT</yaxisside>
+                                    <item>
+                                        <host>Template DB PostgreSQL</host>
+                                        <key>pgsql.table.stat.tidx_blks_hit[{$PG_CONNINFO},{#TABLENAME}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>4</sortorder>
+                                    <color>00CCCC</color>
+                                    <yaxisside>RIGHT</yaxisside>
+                                    <item>
+                                        <host>Template DB PostgreSQL</host>
+                                        <key>pgsql.table.stat.toast_blks_read[{$PG_CONNINFO},{#TABLENAME}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>5</sortorder>
+                                    <color>CCCC00</color>
+                                    <yaxisside>RIGHT</yaxisside>
+                                    <item>
+                                        <host>Template DB PostgreSQL</host>
+                                        <key>pgsql.table.stat.tidx_blks_read[{$PG_CONNINFO},{#TABLENAME}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>6</sortorder>
+                                    <color>0000CC</color>
+                                    <yaxisside>RIGHT</yaxisside>
+                                    <item>
+                                        <host>Template DB PostgreSQL</host>
+                                        <key>pgsql.table.stat.idx_blks_hit[{$PG_CONNINFO},{#TABLENAME}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>7</sortorder>
+                                    <color>CC0000</color>
+                                    <yaxisside>RIGHT</yaxisside>
+                                    <item>
+                                        <host>Template DB PostgreSQL</host>
+                                        <key>pgsql.table.stat.idx_blks_read[{$PG_CONNINFO},{#TABLENAME}]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                        <graph_prototype>
+                            <uuid>c1549fdfda974646b1bfe171127a1442</uuid>
+                            <name>PostgreSQL table {#TABLENAME} rows</name>
+                            <ymin_type_1>FIXED</ymin_type_1>
+                            <graph_items>
+                                <graph_item>
+                                    <drawtype>GRADIENT_LINE</drawtype>
+                                    <color>00CC00</color>
+                                    <yaxisside>RIGHT</yaxisside>
+                                    <item>
+                                        <host>Template DB PostgreSQL</host>
+                                        <key>pgsql.table.stat.n_live_tup[{$PG_CONNINFO},{#TABLENAME}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>1</sortorder>
+                                    <drawtype>GRADIENT_LINE</drawtype>
+                                    <color>666666</color>
+                                    <yaxisside>RIGHT</yaxisside>
+                                    <item>
+                                        <host>Template DB PostgreSQL</host>
+                                        <key>pgsql.table.stat.n_dead_tup[{$PG_CONNINFO},{#TABLENAME}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>2</sortorder>
+                                    <color>0000CC</color>
+                                    <yaxisside>RIGHT</yaxisside>
+                                    <item>
+                                        <host>Template DB PostgreSQL</host>
+                                        <key>pgsql.table.stat.n_tup_del[{$PG_CONNINFO},{#TABLENAME}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>3</sortorder>
+                                    <color>CC0000</color>
+                                    <yaxisside>RIGHT</yaxisside>
+                                    <item>
+                                        <host>Template DB PostgreSQL</host>
+                                        <key>pgsql.table.stat.n_tup_hot_upd[{$PG_CONNINFO},{#TABLENAME}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>4</sortorder>
+                                    <color>00CCCC</color>
+                                    <yaxisside>RIGHT</yaxisside>
+                                    <item>
+                                        <host>Template DB PostgreSQL</host>
+                                        <key>pgsql.table.stat.n_tup_ins[{$PG_CONNINFO},{#TABLENAME}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>5</sortorder>
+                                    <color>CCCC00</color>
+                                    <yaxisside>RIGHT</yaxisside>
+                                    <item>
+                                        <host>Template DB PostgreSQL</host>
+                                        <key>pgsql.table.stat.n_tup_upd[{$PG_CONNINFO},{#TABLENAME}]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                        <graph_prototype>
+                            <uuid>13ec0067cbb64eefaac8e18a33e59175</uuid>
+                            <name>PostgreSQL table {#TABLENAME} scans</name>
+                            <ymin_type_1>FIXED</ymin_type_1>
+                            <graph_items>
+                                <graph_item>
+                                    <color>00CC00</color>
+                                    <item>
+                                        <host>Template DB PostgreSQL</host>
+                                        <key>pgsql.table.stat.idx_scan[{$PG_CONNINFO},{#TABLENAME}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>1</sortorder>
+                                    <color>000000</color>
+                                    <item>
+                                        <host>Template DB PostgreSQL</host>
+                                        <key>pgsql.table.stat.seq_scan[{$PG_CONNINFO},{#TABLENAME}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>2</sortorder>
+                                    <color>0000CC</color>
+                                    <yaxisside>RIGHT</yaxisside>
+                                    <item>
+                                        <host>Template DB PostgreSQL</host>
+                                        <key>pgsql.table.stat.idx_tup_fetch[{$PG_CONNINFO},{#TABLENAME}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>3</sortorder>
+                                    <color>CC0000</color>
+                                    <yaxisside>RIGHT</yaxisside>
+                                    <item>
+                                        <host>Template DB PostgreSQL</host>
+                                        <key>pgsql.table.stat.seq_tup_read[{$PG_CONNINFO},{#TABLENAME}]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                        <graph_prototype>
+                            <uuid>1b4d224ca05243ec9262f51ac911258b</uuid>
+                            <name>PostgreSQL table {#TABLENAME} size</name>
+                            <ymin_type_1>FIXED</ymin_type_1>
+                            <graph_items>
+                                <graph_item>
+                                    <drawtype>GRADIENT_LINE</drawtype>
+                                    <color>0000CC</color>
+                                    <yaxisside>RIGHT</yaxisside>
+                                    <item>
+                                        <host>Template DB PostgreSQL</host>
+                                        <key>pgsql.table.size[{$PG_CONNINFO},{#TABLENAME}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>1</sortorder>
+                                    <color>CC0000</color>
+                                    <yaxisside>RIGHT</yaxisside>
+                                    <item>
+                                        <host>Template DB PostgreSQL</host>
+                                        <key>pgsql.index.size[{$PG_CONNINFO},{#TABLENAME}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>2</sortorder>
+                                    <color>00CC00</color>
+                                    <item>
+                                        <host>Template DB PostgreSQL</host>
+                                        <key>pgsql.table.tuples[{$PG_CONNINFO},{#TABLENAME}]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                    </graph_prototypes>
+                </discovery_rule>
+                <discovery_rule>
+                    <uuid>77de53e8022b40b38167211cfbb56458</uuid>
+                    <name>[PostgreSQL] Discovery: Databases</name>
+                    <key>zapgix.discovery[db_list,DBNAME:DBOID]</key>
+                    <delay>12h</delay>
+                    <filter>
+                        <conditions>
+                            <condition>
+                                <macro>{#DBNAME}</macro>
+                                <value>^(?!(repmgr|.*lost\+found)$).*$</value>
+                                <formulaid>A</formulaid>
+                            </condition>
+                        </conditions>
+                    </filter>
+                    <lifetime>1d</lifetime>
+                    <description>PostgreSQL database discovery. Use regular expressions to configure search.</description>
+                    <item_prototypes>
+                        <item_prototype>
+                            <uuid>5e21603bd04b4eb4acc4ef7245c2c15b</uuid>
+                            <name>[PostgreSQL] Database {#DBNAME}: Size</name>
+                            <key>zapgix[db_size,{#DBOID}]</key>
+                            <delay>15m</delay>
+                            <history>30d</history>
+                            <trends>90d</trends>
+                            <units>B</units>
+                            <description>Single database size.</description>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>PostgreSQL</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                    </item_prototypes>
+                    <graph_prototypes>
+                        <graph_prototype>
+                            <uuid>fa845066e380429580847f21b8591100</uuid>
+                            <name>[PostgreSQL] Database {#DBNAME}: Size</name>
+                            <ymin_type_1>FIXED</ymin_type_1>
+                            <graph_items>
+                                <graph_item>
+                                    <color>00BB00</color>
+                                    <yaxisside>RIGHT</yaxisside>
+                                    <item>
+                                        <host>Template DB PostgreSQL</host>
+                                        <key>zapgix[db_size,{#DBOID}]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                    </graph_prototypes>
+                </discovery_rule>
+                <discovery_rule>
+                    <uuid>bc3842885578449f975d400ec8546486</uuid>
+                    <name>[PostgreSQL] Discovery: Streaming stand-by</name>
+                    <key>zapgix.discovery[streaming_list,NODE]</key>
+                    <delay>12h</delay>
+                    <lifetime>1d</lifetime>
+                    <description>Low level discovery for streaming replication servers which connected to this server.</description>
+                    <item_prototypes>
+                        <item_prototype>
+                            <uuid>900f0e42e236487ea25a27f18fd5e934</uuid>
+                            <name>[PostgreSQL] Streaming: Packet loss with {#NODE}, %</name>
+                            <type>SIMPLE</type>
+                            <key>icmppingloss[{#NODE},10,100,,]</key>
+                            <history>1w</history>
+                            <trends>90d</trends>
+                            <units>%</units>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>PostgreSQL</value>
+                                </tag>
+                            </tags>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <uuid>4cfe4d895ee44179b0d0375cc5d8d96b</uuid>
+                                    <expression>last(/Template DB PostgreSQL/icmppingloss[{#NODE},10,100,,])&gt;{$PG_SR_PACKET_LOSS}</expression>
+                                    <name>PostgreSQL: Packet loss with {#NODE} to high ({ITEM.LASTVALUE})</name>
+                                    <priority>AVERAGE</priority>
+                                    <manual_close>YES</manual_close>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>56d8a55ee03a42e184a0a08a93e4551c</uuid>
+                            <name>[PostgreSQL] Streaming: Lag with {#NODE} in bytes</name>
+                            <key>zapgix[streaming-lag-bytes, {#NODE}]</key>
+                            <history>1w</history>
+                            <trends>90d</trends>
+                            <units>b</units>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>PostgreSQL</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>0b5fee42ca974bb78eca1db0811116b9</uuid>
+                            <name>[PostgreSQL] Streaming: Lag with {#NODE} in seconds</name>
+                            <key>zapgix[streaming-lag-seconds, {#NODE}]</key>
+                            <delay>60</delay>
+                            <history>1w</history>
+                            <trends>90d</trends>
+                            <value_type>FLOAT</value_type>
+                            <units>s</units>
+                            <description>ATTENTION: This check requires access to the remote server postgresql service, respectively, should be determined access in pg_hba.conf on remote server.
+Example:
+host zabbix postgres 1.2.3.4/32 trust</description>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>PostgreSQL</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                    </item_prototypes>
+                    <trigger_prototypes>
+                        <trigger_prototype>
+                            <uuid>340f4d04e53144eb88b3c4a17a8a1d1c</uuid>
+                            <expression>last(/Template DB PostgreSQL/zapgix[streaming-lag-seconds, {#NODE}])&gt;{$PG_SR_LAG_SEC}
+or
+last(/Template DB PostgreSQL/zapgix[streaming-lag-bytes, {#NODE}])&gt;{$PG_SR_LAG_BYTE}</expression>
+                            <name>PostgreSQL: Streaming lag with {#NODE} to high (sec={ITEM.LASTVALUE1}, bytes={ITEM.LASTVALUE2})</name>
+                            <priority>AVERAGE</priority>
+                            <manual_close>YES</manual_close>
+                        </trigger_prototype>
+                    </trigger_prototypes>
+                    <graph_prototypes>
+                        <graph_prototype>
+                            <uuid>99a1284b27774c9485f97a8931470c76</uuid>
+                            <name>[PostgreSQL] Streaming replication lag with {#NODE}</name>
+                            <ymin_type_1>FIXED</ymin_type_1>
+                            <graph_items>
+                                <graph_item>
+                                    <drawtype>GRADIENT_LINE</drawtype>
+                                    <color>0000CC</color>
+                                    <yaxisside>RIGHT</yaxisside>
+                                    <item>
+                                        <host>Template DB PostgreSQL</host>
+                                        <key>zapgix[streaming-lag-bytes, {#NODE}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>1</sortorder>
+                                    <color>00CC00</color>
+                                    <yaxisside>RIGHT</yaxisside>
+                                    <item>
+                                        <host>Template DB PostgreSQL</host>
+                                        <key>zapgix[streaming-lag-seconds, {#NODE}]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                    </graph_prototypes>
+                </discovery_rule>
+            </discovery_rules>
+            <macros>
+                <macro>
+                    <macro>{$PG_CACHE_HIT_RATIO}</macro>
+                    <value>40</value>
+                </macro>
+                <macro>
+                    <macro>{$PG_CHECKPOINTS_REQ_THRESHOLD}</macro>
+                    <value>5</value>
+                </macro>
+                <macro>
+                    <macro>{$PG_CONFLICTS_THRESHOLD}</macro>
+                    <value>0</value>
+                </macro>
+                <macro>
+                    <macro>{$PG_CONN_IDLE_IN_TRANSACTION}</macro>
+                    <value>3</value>
+                </macro>
+                <macro>
+                    <macro>{$PG_CONN_TOTAL_PCT}</macro>
+                    <value>90</value>
+                </macro>
+                <macro>
+                    <macro>{$PG_CONN_WAITING}</macro>
+                    <value>45000000</value>
+                </macro>
+                <macro>
+                    <macro>{$PG_DATABASE_SIZE_THRESHOLD}</macro>
+                    <value>100000000000</value>
+                </macro>
+                <macro>
+                    <macro>{$PG_DEADLOCKS_THRESHOLD}</macro>
+                    <value>5</value>
+                </macro>
+                <macro>
+                    <macro>{$PG_LONG_QUERY_THRESHOLD}</macro>
+                    <value>450</value>
+                </macro>
+                <macro>
+                    <macro>{$PG_PING_THRESHOLD_MS}</macro>
+                    <value>1000</value>
+                </macro>
+                <macro>
+                    <macro>{$PG_PROCESS_NAME}</macro>
+                    <value>postmaster</value>
+                </macro>
+                <macro>
+                    <macro>{$PG_SR_LAG_BYTE}</macro>
+                    <value>50000000</value>
+                </macro>
+                <macro>
+                    <macro>{$PG_SR_LAG_SEC}</macro>
+                    <value>600</value>
+                </macro>
+                <macro>
+                    <macro>{$PG_SR_PACKET_LOSS}</macro>
+                    <value>10</value>
+                </macro>
+                <macro>
+                    <macro>{$PG_UPTIME_THRESHOLD}</macro>
+                    <value>60</value>
+                </macro>
+            </macros>
+        </template>
+    </templates>
+    <graphs>
+        <graph>
+            <uuid>6b4b92c62cb94e10b11f218ed35f6211</uuid>
+            <name>PostgreSQL bgwriter</name>
+            <ymin_type_1>FIXED</ymin_type_1>
+            <graph_items>
+                <graph_item>
+                    <color>00CC00</color>
+                    <yaxisside>RIGHT</yaxisside>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[bgwriter, buffers_alloc]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <color>0000CC</color>
+                    <yaxisside>RIGHT</yaxisside>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[bgwriter, buffers_clean]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>2</sortorder>
+                    <color>CC0000</color>
+                    <yaxisside>RIGHT</yaxisside>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[bgwriter, buffers_backend]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>3</sortorder>
+                    <color>CCCC00</color>
+                    <yaxisside>RIGHT</yaxisside>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[bgwriter, buffers_checkpoint]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>4</sortorder>
+                    <color>777777</color>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[bgwriter, maxwritten_clean]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>5</sortorder>
+                    <color>CC00CC</color>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[bgwriter, buffers_backend_fsync]</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+        <graph>
+            <uuid>de13ec8a7c6246a38099ee5e20d9c455</uuid>
+            <name>PostgreSQL buffers</name>
+            <show_work_period>NO</show_work_period>
+            <show_triggers>NO</show_triggers>
+            <graph_items>
+                <graph_item>
+                    <drawtype>GRADIENT_LINE</drawtype>
+                    <color>EEEEEE</color>
+                    <yaxisside>RIGHT</yaxisside>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[buffercache-total]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <drawtype>FILLED_REGION</drawtype>
+                    <color>0000EE</color>
+                    <yaxisside>RIGHT</yaxisside>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[buffercache-used]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>2</sortorder>
+                    <drawtype>FILLED_REGION</drawtype>
+                    <color>00EE00</color>
+                    <yaxisside>RIGHT</yaxisside>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[buffercache-clear]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>3</sortorder>
+                    <drawtype>FILLED_REGION</drawtype>
+                    <color>EE0000</color>
+                    <yaxisside>RIGHT</yaxisside>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[buffercache-dirty]</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+        <graph>
+            <uuid>4a105d193df64be7898ac19a2f07faa4</uuid>
+            <name>PostgreSQL checkpoints</name>
+            <ymin_type_1>FIXED</ymin_type_1>
+            <graph_items>
+                <graph_item>
+                    <color>00CC00</color>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[bgwriter, checkpoints_timed]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <color>CC0000</color>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[bgwriter, checkpoints_req]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>2</sortorder>
+                    <color>000000</color>
+                    <yaxisside>RIGHT</yaxisside>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[bgwriter, checkpoint_sync_time]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>3</sortorder>
+                    <color>0000CC</color>
+                    <yaxisside>RIGHT</yaxisside>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[bgwriter, checkpoint_write_time]</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+        <graph>
+            <uuid>2c646daf2454419eab5be12aab1eeff3</uuid>
+            <name>PostgreSQL connections</name>
+            <percent_right>100</percent_right>
+            <ymin_type_1>FIXED</ymin_type_1>
+            <graph_items>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <drawtype>GRADIENT_LINE</drawtype>
+                    <color>FFBF00</color>
+                    <yaxisside>RIGHT</yaxisside>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[connections-total]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>2</sortorder>
+                    <color>00BB00</color>
+                    <yaxisside>RIGHT</yaxisside>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[connections-active]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>3</sortorder>
+                    <color>666699</color>
+                    <yaxisside>RIGHT</yaxisside>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[connections-idle]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>4</sortorder>
+                    <color>CC00CC</color>
+                    <yaxisside>RIGHT</yaxisside>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[connections-idle_in_transaction]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>5</sortorder>
+                    <color>FF0080</color>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[connections-total_pct]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>6</sortorder>
+                    <color>4000FF</color>
+                    <yaxisside>RIGHT</yaxisside>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[connections-waiting]</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+        <graph>
+            <uuid>923c3b16348c403a9b99618cf5d85d48</uuid>
+            <name>PostgreSQL service response</name>
+            <graph_items>
+                <graph_item>
+                    <drawtype>GRADIENT_LINE</drawtype>
+                    <color>00CC00</color>
+                    <yaxisside>RIGHT</yaxisside>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix.timing[ping]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <color>CC0000</color>
+                    <yaxisside>RIGHT</yaxisside>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[stats_statements-avg_query_time]</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+        <graph>
+            <uuid>42b9e3f21fbb43739896258fed87ad73</uuid>
+            <name>PostgreSQL summary db stats: block hit/read</name>
+            <ymin_type_1>FIXED</ymin_type_1>
+            <graph_items>
+                <graph_item>
+                    <color>00CC00</color>
+                    <yaxisside>RIGHT</yaxisside>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[stats_dbs, blks_hit]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <color>CC0000</color>
+                    <yaxisside>RIGHT</yaxisside>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[stats_dbs, blks_read]</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+        <graph>
+            <uuid>7dd9647eb3e74e9f88accbb271cc3dad</uuid>
+            <name>PostgreSQL summary db stats: events</name>
+            <ymin_type_1>FIXED</ymin_type_1>
+            <graph_items>
+                <graph_item>
+                    <drawtype>GRADIENT_LINE</drawtype>
+                    <color>00CC00</color>
+                    <yaxisside>RIGHT</yaxisside>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[stats_dbs, xact_commit]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <color>0000CC</color>
+                    <yaxisside>RIGHT</yaxisside>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[stats_dbs, conflicts]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>2</sortorder>
+                    <color>000000</color>
+                    <yaxisside>RIGHT</yaxisside>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[stats_dbs, deadlocks]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>3</sortorder>
+                    <color>CC0000</color>
+                    <yaxisside>RIGHT</yaxisside>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[stats_dbs, xact_rollback]</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+        <graph>
+            <uuid>3d263f0c51b4412cac7acf2f51462a9f</uuid>
+            <name>PostgreSQL summary db stats: temp files</name>
+            <ymin_type_1>FIXED</ymin_type_1>
+            <graph_items>
+                <graph_item>
+                    <drawtype>GRADIENT_LINE</drawtype>
+                    <color>CC0000</color>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[stats_dbs, temp_bytes]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <color>0000CC</color>
+                    <yaxisside>RIGHT</yaxisside>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[stats_dbs, temp_files]</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+        <graph>
+            <uuid>d0151e9bff9a455cbda2f9adae2fe7f3</uuid>
+            <name>PostgreSQL summary db stats: tuples</name>
+            <ymin_type_1>FIXED</ymin_type_1>
+            <graph_items>
+                <graph_item>
+                    <color>000000</color>
+                    <yaxisside>RIGHT</yaxisside>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[stats_dbs, tup_deleted]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <color>00CC00</color>
+                    <yaxisside>RIGHT</yaxisside>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[stats_dbs, tup_inserted]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>2</sortorder>
+                    <color>CC0000</color>
+                    <yaxisside>RIGHT</yaxisside>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[stats_dbs, tup_updated]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>3</sortorder>
+                    <color>0000CC</color>
+                    <yaxisside>RIGHT</yaxisside>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[stats_dbs, tup_fetched]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>4</sortorder>
+                    <color>CC00CC</color>
+                    <yaxisside>RIGHT</yaxisside>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[stats_dbs, tup_returned]</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+        <graph>
+            <uuid>10d1de74e9d848399ca038055e5cc8ce</uuid>
+            <name>PostgreSQL transactions</name>
+            <ymin_type_1>FIXED</ymin_type_1>
+            <graph_items>
+                <graph_item>
+                    <color>00CC00</color>
+                    <yaxisside>RIGHT</yaxisside>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[transactions-active]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <color>000000</color>
+                    <yaxisside>RIGHT</yaxisside>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[transactions-idle]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>2</sortorder>
+                    <color>00CCCC</color>
+                    <yaxisside>RIGHT</yaxisside>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[transactions-prepared]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>3</sortorder>
+                    <color>CC0000</color>
+                    <yaxisside>RIGHT</yaxisside>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[transactions-waiting]</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+        <graph>
+            <uuid>45fe7967596741129b4f2462922636bf</uuid>
+            <name>PostgreSQL uptime</name>
+            <ymin_type_1>FIXED</ymin_type_1>
+            <graph_items>
+                <graph_item>
+                    <color>00CC00</color>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[cache-hits]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <color>0000CC</color>
+                    <yaxisside>RIGHT</yaxisside>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[uptime]</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+        <graph>
+            <uuid>5a448f70130f4bd9859b4e99aa24d5f1</uuid>
+            <name>PostgreSQL write-ahead log</name>
+            <ymin_type_1>FIXED</ymin_type_1>
+            <graph_items>
+                <graph_item>
+                    <color>0000CC</color>
+                    <yaxisside>RIGHT</yaxisside>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[wal-count]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <color>00CC00</color>
+                    <item>
+                        <host>Template DB PostgreSQL</host>
+                        <key>zapgix[wal-write]</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+    </graphs>
+</zabbix_export>
